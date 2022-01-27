@@ -17,8 +17,10 @@ public class AdminRoute {
         return RouterFunctions
                 .route(RequestPredicates.GET("/admin")
                                 .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
-                        request -> ServerResponse
-                                .ok()
-                                .body(Mono.just("admin action"),String.class));
+                        request -> ServerResponse.ok()
+                                .body(request
+                                        .bodyToMono(String.class)
+                                        .map(x -> "admin actions"), String.class)
+                );
     }
 }
